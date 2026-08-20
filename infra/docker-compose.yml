@@ -1,0 +1,46 @@
+version: "3.9"
+services:
+  cockroachdb:
+    image: cockroachdb/cockroach:v25.2.0
+    command: ["start-single-node", "--insecure", "--listen-addr=0.0.0.0:26257", "--http-addr=0.0.0.0:8080"]
+    ports:
+      - "26257:26257"
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "cockroach", "sql", "--insecure", "-e", "SELECT 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - crdb-data:/cockroach/cockroach-data
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: ../infra/Dockerfile.backend
+    depends_on:
+      cockroachdb:
+        condition: service_healthy
+    environment:
+      CRDB_URL: postgresql://root@cockroachdb:26257/defaultdb?sslmode=disable
+      AWS_REGION: ${AWS_REGION:-us-east-1}
+      BEDROCK_MODEL: ${BEDROCK_MODEL:-anthropic.claude-3-haiku-20240307-v1:0}
+      BEDROCK_EMBED_MODEL: ${BEDROCK_EMBED_MODEL:-amazon.titan-embed-text-v2:0}
+      PORT: 8080
+      DEMO_TENANT_ID: demo-tenant
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: ../infra/Dockerfile.frontend
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8080
+    ports:
+      - "3000:3000"
+
+volumes:
+  crdb-data:
