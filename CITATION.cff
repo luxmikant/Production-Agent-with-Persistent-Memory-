@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use StillMind in your research, please cite it as follows."
+title: "StillMind — Agentic Memory for a Meditation Agent"
+abstract: >-
+  StillMind is a non-clinical lifestyle meditation coach built on CockroachDB
+  as the persistent memory layer and AWS as the runtime. It demonstrates the
+  agentic memory (ACM) lifecycle — architecting, ingesting, scoping,
+  anticipating, compacting, checkpointing, locking, and auditing — realized as
+  CockroachDB + AWS components. Submitted to the CockroachDB x AWS "Build with
+  Agentic Memory" hackathon.
+authors:
+  - family-names: "Luxmikant"
+    given-names: ""
+    email: "luxmikant@outlook.com"
+keywords:
+  - agentic-memory
+  - cockroachdb
+  - vector-index
+  - aws
+  - serverless
+  - meditation-coach
+  - distributed-vector
+license: MIT
+date-released: "2026-08-18"
+url: "https://github.com/luxmikant/Production-Agent-with-Persistent-Memory-"

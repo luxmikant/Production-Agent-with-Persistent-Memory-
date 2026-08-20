@@ -1,0 +1,38 @@
+# ---- Environment & secrets ----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+secrets/
+
+# ---- Go (backend) ----
+backend/bin/
+backend/dist/
+*.test
+*.out
+coverage.*
+
+# ---- Node / Next.js (frontend) ----
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# ---- Tooling / IDE ----
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ---- Local toolchain downloads ----
+ccloud/
+ccloud.zip
+
+# ---- Logs ----
+*.log
+npm-debug.log*
